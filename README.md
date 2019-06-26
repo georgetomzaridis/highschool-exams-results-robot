@@ -19,7 +19,7 @@ Trying to gather candidate results from https://results.it.minedu.gov.gr to help
 #### Input candidate info (Before start)
 ![alt text](https://github.com/georgetomzaridis/highschool-exams-results-robot/blob/master/input-candidate-info.png "Input candidate info")
 
-## Requirements / How it works?
+## Requirements / How does it works?
 With the power of python, selenium(browser automation) and chromewebdrive the programm opens a chrome window and take the control for you 
 
 ### !WARNING!
