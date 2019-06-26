@@ -24,8 +24,11 @@ With the power of python, selenium(browser automation) and chromewebdrive the pr
 
 ### !WARNING!
 The programm can't run if your chrome version doesn't agree with the chrome webdrive version
+
 For example the included chromewebdrive file version is: 75
+
 To allow the programm run smoothly you need to have chrome browser with version 75
+
 Chrome WebDrive Version MUST equal with the Chrome Browser Version
 
 If you dont have the right version, dont worry you can go to the chrome webdrive files, download the right version and replace the old with the new one
