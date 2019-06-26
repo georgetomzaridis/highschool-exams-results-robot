@@ -12,6 +12,9 @@ Trying to gather candidate results from https://results.it.minedu.gov.gr to help
 4. When the page with results show up, the programm will take a screenshot and save it in the same directory
 5. It running forever :P (You can stop it any time you want)
 
+## OS Support
+Dont worry my friend, we love both windows, linux and mac. If you think to run this programm on different operating system(like linux or mac) you need to get the chrome webdrive version that support your operating system. At the end of the page a provide some links that your can check out and download the appropiate versions that fits your needs
+
 ## Screenshots
 #### Platform Out of Service (Not accepting requests)
 ![alt text](https://github.com/georgetomzaridis/highschool-exams-results-robot/blob/master/platform-outofservice.png "Platform out of service")
