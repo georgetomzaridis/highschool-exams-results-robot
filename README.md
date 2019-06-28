@@ -1,4 +1,9 @@
 # highschool-exams-results-robot
+
+# CRITICAL UPDATE 28/06/19 
+## Unfortunately the Ministry of Education, disable automate programms to access and use the platform for some reason, so i will try to fix the problem and make it work correct again.
+![alt text](https://github.com/georgetomzaridis/highschool-exams-results-robot/blob/master/28-6-19-problem1.png "Problem 1 28-6-19")
+
 #### NATIONAL EXAMINATIONS - Ministry of Education, Research and Religious Affairs 
 Trying to gather candidate results from https://results.it.minedu.gov.gr to help student limit their axienty about their national exam final results, even if the platform goes down or not accepting new requests 
 
