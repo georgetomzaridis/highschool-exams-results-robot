@@ -1,13 +1,14 @@
 # highschool-exams-results-robot
-
-# CRITICAL UPDATE 28/06/19 
-## Unfortunately the Ministry of Education, disable automate programms to access and use the platform for some reason, so i will try to fix the problem and make it work correct again.
-![alt text](https://github.com/georgetomzaridis/highschool-exams-results-robot/blob/master/28-6-19-problem1.png "Problem 1 28-6-19")
-
 #### NATIONAL EXAMINATIONS - Ministry of Education, Research and Religious Affairs 
+
+# UPDATE 07/03/2020
+The script is working again, fixed some issues and bypass security metric that ministry of education have, to not allow automate scripts to access the page.
+
 Trying to gather candidate results from https://results.it.minedu.gov.gr to help student limit their axienty about their national exam final results, even if the platform goes down or not accepting new requests 
 
-![alt text](https://github.com/georgetomzaridis/highschool-exams-results-robot/blob/master/resultspage.png "Results Page")
+![alt text](https://github.com/georgetomzaridis/highschool-exams-results-robot/blob/master/screenshots/resultspage.png "Results Page")
+
+![alt text](https://github.com/georgetomzaridis/highschool-exams-results-robot/blob/master/screenshots/resultspage-format.png "Results Page Data Format")
 
 ## Features
 
@@ -22,10 +23,10 @@ Dont worry my friend, we love both windows, linux and mac. If you think to run t
 
 ## Screenshots
 #### Platform Out of Service (Not accepting requests)
-![alt text](https://github.com/georgetomzaridis/highschool-exams-results-robot/blob/master/platform-outofservice.png "Platform out of service")
+![alt text](https://github.com/georgetomzaridis/highschool-exams-results-robot/blob/master/screenshots/platform-outofservice.png "Platform out of service")
 
 #### Input candidate info (Before start)
-![alt text](https://github.com/georgetomzaridis/highschool-exams-results-robot/blob/master/input-candidate-info.png "Input candidate info")
+![alt text](https://github.com/georgetomzaridis/highschool-exams-results-robot/blob/master/screenshots/input-candidate-info.png "Input candidate info")
 
 ## Requirements / How does it works?
 With the power of python, selenium(browser automation) and chromewebdrive the programm opens a chrome window and take the control for you 
@@ -33,9 +34,9 @@ With the power of python, selenium(browser automation) and chromewebdrive the pr
 ### !WARNING!
 The programm can't run if your chrome version doesn't agree with the chrome webdrive version
 
-For example the included chromewebdrive file version is: 75
+For example the included chromewebdrive file version is: 80
 
-To allow the programm run smoothly you need to have chrome browser with version 75
+To allow the programm run smoothly you need to have chrome browser with version 80
 
 Chrome WebDrive Version MUST equal with the Chrome Browser Version
 

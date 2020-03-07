@@ -1,30 +1,3 @@
-# Creator: George Tomzaridis
-# Date: 25/06/19
-''' 
-MIT License
-
-Copyright (c) 2019 George Tomzaridis
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-'''
-
-
 import os
 import sys
 import selenium
@@ -36,30 +9,47 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+
 print('[' + str(datetime.now())[11:-10] + ']', '  [WELCOME]  ', "ΡΟΜΠΟΤ ΑΠΟΤΕΛΕΣΜΑΤΩΝ ΠΑΝΕΛΛΑΔΙΚΕΣ 2019 :)")
 print('[@] Σκοπός του προγράμματος είναι η διευκόλυνση των υποψηφίων την ημέρα των αποτελεσμάτων, με την αυτοματοποίηση της διαδικασίας ελέγχου των αποτελεσμάτων ακόμα και σε περιπτώσεις κατάρρευσης της σελίδας η μεγάλου φόρτου')
-print('[!!!] ΠΡΟΣΟΧΗ: Το πρόγραμμα εκτελείται συνέχεια και αποθηκεύει μια εικόνα των αποτελεσμάτων σας (screenshot), μέχρι να το τερματίσετε εσείς')
+print('[!!!] ΠΡΟΣΟΧΗ: Το πρόγραμμα εκτελείται συνέχεια μέχρι να καταφέρει να εξαγάγει τους βαθμούς σας απο την σελίδα του υπουργείου. Αν τα καταφέρει αποθηκεύει μια εικόνα των αποτελεσμάτων σας (screenshot) και τερματίζει την λειτουργία του')
 print('[#] Αν αντιμετωπίζεται προβλήματα με την εκτέλεση του προγράμματος παρακαλώ αναφέρεται τα εδώ https://github.com/georgetomzaridis/highschool-exams-results-robot/issues')
 print('------------------------------------------------------------------')
 student_code = input('Κωδικός Υποψηφίου: ')
 student_begins = input('Αρχικά Υποψηφίου: ')
 
+results_snapped = 0
+
 if student_code != '' and student_begins != '' or student_code != '' or student_begins != '':
     page_url = 'https://results.it.minedu.gov.gr/'
-
-    while True:
+    while results_snapped == 0:
         options_browser = webdriver.ChromeOptions()
-        options_browser.add_argument("--incognito")  # incognito mode για να μην μπλεκουμε με cookies
-        options_browser.add_argument("--start-maximized")  # Αν θέλουμε να αρχίζει maximized το παράθυρο
+        options_browser.add_argument("--window-size=1920,1080")
+        options_browser.add_argument("--headless")
+        options_browser.add_argument("--no-sandbox")
+        options_browser.add_argument("--disable-dev-shm-usage")
+        options_browser.add_argument("--disable-gpu")
+        options_browser.add_argument("--incognito")
+        options_browser.add_experimental_option("excludeSwitches", ["enable-automation"])
+        options_browser.add_experimental_option('useAutomationExtension', False)
         driver = webdriver.Chrome(chrome_options=options_browser)
+        driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
+            "source": """
+            Object.defineProperty(navigator, 'webdriver', {
+              get: () => undefined
+            })
+          """
+        })
+        driver.execute_cdp_cmd("Network.enable", {})
+        driver.execute_cdp_cmd("Network.setExtraHTTPHeaders", {"headers": {"User-Agent": "browser1"}})
         print('[' + str(datetime.now())[11:-10] + ']', '  [OK]  ', "Άνοιγμα Σελίδας " + page_url)
         driver.start_client()
         driver.get(str(page_url))
         time.sleep(3)
         try:
             pagetitle = driver.title
-            print('[' + str(datetime.now())[11:-10] + ']', '  [OK]  ', "Τίτλος σελίδας: " + pagetitle)
-            if "Εκτός Λειτουργίας" in pagetitle and ("ΠΑΝΕΛΛΑΔΙΚΕΣ ΕΞΕΤΑΣΕΙΣ" not in pagetitle) :
+            print('[' + str(datetime.now())[11:-10] + ']', '  [OK]  ', "Τίτλος σελίδας: " + str(driver.title))
+            if "Εκτός Λειτουργίας" in str(driver.title) and ("Πανελλαδικών" not in str(driver.title)) :
                 print('[' + str(datetime.now())[11:-10] + ']', '  [***]  ',
                       "Σελίδα εκτός λειτουργίας δοκιμάζω ξανά σε 30 λεπτά")
                 time.sleep(1800)
@@ -67,13 +57,13 @@ if student_code != '' and student_begins != '' or student_code != '' or student_
             else:
                 try:
                     panelel_title = element = WebDriverWait(driver, 2).until(
-                        EC.presence_of_element_located((By.XPATH, '//*[@id="logo"]/center')))
-                    if "ΠΑΝΕΛΛΑΔΙΚΕΣ ΕΞΕΤΑΣΕΙΣ" in panelel_title.text:
+                        EC.presence_of_element_located((By.XPATH, '//*[@id="mineduLogo"]')))
+                    if "Αποτελέσματα Πανελλαδικών Εξετάσεων" in str(driver.title):
                         print('[' + str(datetime.now())[11:-10] + ']', '  [OK]  ',
                               "Η σελίδα φορτώθηκε και είναι προσβάσιμη")
                         time.sleep(2)
-                        kodikos = driver.find_element_by_xpath('//*[@id="LoginForm_username"]')
-                        arxika = driver.find_element_by_xpath('//*[@id="LoginForm_password"]')
+                        kodikos = driver.find_element_by_xpath('//*[@id="searchform-code"]')
+                        arxika = driver.find_element_by_xpath('//*[@id="searchform-initials"]')
                         print('[' + str(datetime.now())[11:-10] + ']', '  [@]  ', "Εισαγωγή στοιχείων υποψηφίου")
                         kodikos.send_keys(student_code)
                         print('[' + str(datetime.now())[11:-10] + ']', '  [>>]  ',
@@ -83,17 +73,30 @@ if student_code != '' and student_begins != '' or student_code != '' or student_
                         print('[' + str(datetime.now())[11:-10] + ']', '  [>>]  ',
                               "Αρχικά Υποψηφίου: " + str(student_begins))
                         time.sleep(2)
-                        send_btn = driver.find_element_by_xpath('//*[@id="login-form"]/center/div[3]/input')
+                        send_btn = driver.find_element_by_xpath('//*[@id="login-form"]/div[3]/button')
                         print('[' + str(datetime.now())[11:-10] + ']', '  [!!!!!]  ', "Αναζήτηση Αποτελεσμάτων Υποψηφίου")
                         send_btn.click()
-                        time.sleep(6)
-                        driver.save_screenshot("APOTELESMATA-"+ str(student_code) + ".png")
-                        print('[' + str(datetime.now())[11:-10] + ']', '  [!!!!!]  ', "SCREENSHOT :)")
-                        time.sleep(1.5)
-                        driver.quit()
-                        print('[' + str(datetime.now())[11:-10] + ']', '  [RESULTS]  ',
-                              "Λογικα τα αποτελεσματα βγηκαν φωτογραφια και αποθηκεύτηκαν με ονομα APOTELESMATA-"+ str(student_code) + " οποτε θα ξαναδουμε μετα απο 30 λεπτα")
-                        time.sleep(1800)
+                        time.sleep(8)
+                        try:
+                            panelel_title = element = WebDriverWait(driver, 2).until(
+                                EC.presence_of_element_located((By.XPATH, '/html/body/div[2]/div/div/div[1]/div[2]/div/div/div[1]/h3')))
+                            driver.save_screenshot("APOTELESMATA-" + str(student_code) + ".png")
+                            print('[' + str(datetime.now())[11:-10] + ']', '  [!!!!!]  ', "SCREENSHOT :)")
+                            time.sleep(1.5)
+                            driver.quit()
+                            print('[' + str(datetime.now())[11:-10] + ']', '  [RESULTS]  ',
+                                  "Tα αποτελεσματα βγηκαν φωτογραφια και αποθηκεύτηκαν με ονομα APOTELESMATA-" + str(
+                                      student_code) + "")
+                            results_snapped = 1
+                            time.sleep(2)
+                            driver.quit()
+
+
+                        except:
+                            print('[' + str(datetime.now())[11:-10] + ']', '  [ERROR]  ',
+                                  "Η σελίδα έχει πρόβλημα μαλλον (4), προσπαθώ ξανά σε 1 λεπτο")
+                            time.sleep(60)
+                            driver.quit()
                     else:
                         print('[' + str(datetime.now())[11:-10] + ']', '  [ERROR]  ',
                               "Η σελίδα έχει πρόβλημα μαλλον (1), προσπαθώ ξανά σε 1 λεπτο")
