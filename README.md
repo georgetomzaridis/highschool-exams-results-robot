@@ -4,6 +4,7 @@
 # UPDATE 07/03/2020
 The script is working again, fixed some issues and bypass security metric that ministry of education have, to not allow automate scripts to access the page.
 
+## Information
 Trying to gather candidate results from https://results.it.minedu.gov.gr to help student limit their axienty about their national exam final results, even if the platform goes down or not accepting new requests 
 
 ![alt text](https://github.com/georgetomzaridis/highschool-exams-results-robot/blob/master/screenshots/resultspage.png "Results Page")
@@ -16,7 +17,7 @@ Trying to gather candidate results from https://results.it.minedu.gov.gr to help
 2. If the site goes down or is busy the programm will wait 30 minutes and retry
 3. If the site is out of service(this usually happends when the platform is closed for requests) the programm can wait 30 minutes and retry to access the main page
 4. When the page with results show up, the programm will take a screenshot and save it in the same directory
-5. It running forever :P (You can stop it any time you want)
+5. It running forever, but if snap your results it will terminate automatically.
 
 ## OS Support
 Dont worry my friend, we love both windows, linux and mac. If you think to run this programm on different operating system(like linux or mac) you need to get the chrome webdrive version that support your operating system. At the end of the page a provide some links that your can check out and download the appropiate versions that fits your needs
