@@ -32,7 +32,7 @@ if student_code != '' and student_begins != '' or student_code != '' or student_
         options_browser.add_argument("--incognito")
         options_browser.add_experimental_option("excludeSwitches", ["enable-automation"])
         options_browser.add_experimental_option('useAutomationExtension', False)
-        driver = webdriver.Chrome(chrome_options=options_browser)
+        driver = webdriver.Chrome(options=options_browser)
         driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
             "source": """
             Object.defineProperty(navigator, 'webdriver', {
@@ -62,8 +62,8 @@ if student_code != '' and student_begins != '' or student_code != '' or student_
                         print('[' + str(datetime.now())[11:-10] + ']', '  [OK]  ',
                               "Η σελίδα φορτώθηκε και είναι προσβάσιμη")
                         time.sleep(2)
-                        kodikos = driver.find_element_by_xpath('//*[@id="searchform-code"]')
-                        arxika = driver.find_element_by_xpath('//*[@id="searchform-initials"]')
+                        kodikos = driver.find_element(By.XPATH, '//*[@id="searchform-code"]')
+                        arxika = driver.find_element(By.XPATH, '//*[@id="searchform-initials"]')
                         print('[' + str(datetime.now())[11:-10] + ']', '  [@]  ', "Εισαγωγή στοιχείων υποψηφίου")
                         kodikos.send_keys(student_code)
                         print('[' + str(datetime.now())[11:-10] + ']', '  [>>]  ',
@@ -73,7 +73,7 @@ if student_code != '' and student_begins != '' or student_code != '' or student_
                         print('[' + str(datetime.now())[11:-10] + ']', '  [>>]  ',
                               "Αρχικά Υποψηφίου: " + str(student_begins))
                         time.sleep(2)
-                        send_btn = driver.find_element_by_xpath('//*[@id="login-form"]/div[3]/button')
+                        send_btn = driver.find_element(By.XPATH, '//*[@id="login-form"]/div[3]/button')
                         print('[' + str(datetime.now())[11:-10] + ']', '  [!!!!!]  ', "Αναζήτηση Αποτελεσμάτων Υποψηφίου")
                         send_btn.click()
                         time.sleep(8)
