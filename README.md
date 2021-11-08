@@ -1,6 +1,9 @@
 # highschool-exams-results-robot
 #### NATIONAL EXAMINATIONS - Ministry of Education, Research and Religious Affairs 
 
+# UPDATE 09/11/2021
+Script is updated to run smoothly with newer versions of python and selenium (for more info check the changelog in script). All working correctly!
+
 # UPDATE 07/03/2020
 The script is working again, fixed some issues and bypass security metric that ministry of education have, to not allow automate scripts to access the page.
 
